@@ -1,18 +1,20 @@
 const Movie = require("../models/movieModels");
 
 const createMovie = async (req, res) => {
-  const movie = new Movie({
-    title: req.body.title,
-    description: req.body.description,
-    genre: req.body.genre,
-    release_date: req.body.release_date,
-    actors: req.body.actors,
-    image: req.body.image,
-  });
+  const { title, description, genre, release_date, actors, image } = req.body;
 
   try {
-    const newMovie = await movie.save();
-    res.status(201).json(newMovie);
+    const newMovie = new Movie({
+      title,
+      description,
+      genre,
+      release_date,
+      actors,
+      image,
+    });
+
+    await newMovie.save();
+    res.status(201).json({ message: "Movie added successfully" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -66,18 +68,16 @@ const deleteMovie = async (req, res) => {
 };
 
 const movieAddRating = async (req, res) => {
-  const { user, score, comment } = req.body;
+  const { score, comment } = req.body;
+  const userId = req.user.id;
 
-  if (!user || !score) {
-    return res.status(400).json({ message: "User and score are required" });
-  }
-
-  res.movie.rating.push({ user, score, comment });
   try {
-    const updatedMovie = await res.movie.save();
-    res.json(updatedMovie);
+    const movie = res.movie;
+    movie.rating.push({ user: userId, score, comment });
+    await movie.save();
+    res.status(201).json({ message: "Rating added successfully" });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 

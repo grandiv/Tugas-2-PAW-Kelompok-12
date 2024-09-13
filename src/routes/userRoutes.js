@@ -2,15 +2,16 @@ const userRouter = require("express").Router();
 const { getOneUser } = require("../middlewares/userMiddlewares");
 
 const {
-  createUser,
+  registerUser,
+  loginUser,
   getAllUsers,
   getUser,
   updateUser,
   deleteUser,
-  userAddReview,
 } = require("../controllers/userControllers");
 
-userRouter.post("/create", createUser);
+userRouter.post("/register", registerUser);
+userRouter.post("/login", loginUser);
 userRouter.get("/", getAllUsers);
 userRouter.get("/:id", getOneUser, getUser);
 userRouter.patch("/:id", getOneUser, updateUser);
