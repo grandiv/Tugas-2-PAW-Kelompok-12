@@ -9,6 +9,9 @@ const process = require("process");
 const app = express();
 const userRoutes = require("./src/routes/userRoutes");
 const movieRoutes = require("./src/routes/movieRoutes");
+const directorRoutes = require("./src/routes/directorRoutes");
+const actorRoutes = require("./src/routes/actorRoutes");
+const reviewRoutes = require("./src/routes/reviewRoutes");
 const port = 5000;
 
 dotenv.config();
@@ -30,5 +33,8 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use("/api/movie", movieRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/director", directorRoutes);
+app.use("/api/actor", actorRoutes);
+app.use("/api/review", reviewRoutes);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
