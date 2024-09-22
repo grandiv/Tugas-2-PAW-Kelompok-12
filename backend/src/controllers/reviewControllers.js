@@ -33,7 +33,7 @@ const updateReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
   try {
-    await res.review.remove();
+    await Review.deleteOne({ _id: req.params.id });
     res.json({ message: "Deleted review" });
   } catch (err) {
     res.status(500).json({ message: err.message });

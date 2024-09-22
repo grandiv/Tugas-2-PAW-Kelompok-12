@@ -108,7 +108,7 @@ const updateMovie = async (req, res) => {
 
 const deleteMovie = async (req, res) => {
   try {
-    await res.movie.remove();
+    await Movie.deleteOne({ _id: res.movie._id });
     res.json({ message: "Deleted movie" });
   } catch (err) {
     res.status(500).json({ message: err.message });

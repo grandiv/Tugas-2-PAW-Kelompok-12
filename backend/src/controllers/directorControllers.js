@@ -58,7 +58,7 @@ const updateDirector = async (req, res) => {
 
 const deleteDirector = async (req, res) => {
   try {
-    await res.director.remove();
+    await Director.deleteOne({ _id: res.director._id });
     res.json({ message: "Director deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });

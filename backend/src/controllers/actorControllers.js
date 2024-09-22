@@ -58,7 +58,7 @@ const updateActor = async (req, res) => {
 
 const deleteActor = async (req, res) => {
   try {
-    await res.actor.remove();
+    await Actor.deleteOne({ _id: res.actor._id });
     res.json({ message: "Actor deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
