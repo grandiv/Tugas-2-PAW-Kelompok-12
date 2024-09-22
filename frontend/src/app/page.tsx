@@ -1,7 +1,9 @@
+import AuthLayout from "@/components/organisms/AuthLayout";
 import Link from "next/link";
 
 export default function HomePage() {
   return (
+    <AuthLayout>
     <main className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center text-center p-8" style={{ backgroundImage: "url('/assets/background.jpg')" }}>
       <h1 className="text-5xl font-bold text-white mb-8">
         Welcome to MovieDB
@@ -19,5 +21,6 @@ export default function HomePage() {
         </Link>
       </div>
     </main>
+    </AuthLayout>
   );
 }
