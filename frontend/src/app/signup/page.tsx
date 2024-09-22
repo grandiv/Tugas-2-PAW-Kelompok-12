@@ -1,50 +1,48 @@
+// DONE
+
 "use client";
-import axios from "axios";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { UserSignUp, ApiResponse } from "../types/user";
+
 export default function SignUpPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<UserSignUp>({
     username: "",
     firstName: "",
     lastName: "",
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!formData.username || !formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-      alert('Please fill in all fields');
-      return;
-    }
-
     try {
-      const response = await axios.post('http://localhost:5000/api/user/register', formData);
-
-      alert(response.data.message);
-      setFormData({
-        username: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
+      const response = await fetch("http://localhost:5000/api/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      router.push('/login')
+      const data: ApiResponse = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        router.push("/login");
+      } else {
+        alert(data.message);
+      }
     } catch (error) {
-      console.error('Error:', error);
-      alert('There was an error signing up. Please try again.');
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
@@ -52,76 +50,92 @@ export default function SignUpPage() {
     >
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full bg-opacity-80 backdrop-filter backdrop-blur-md">
         <h1 className="text-2xl font-bold mb-6">Sign Up</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="username">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="username"
+            >
               Username
             </label>
             <input
               type="text"
+              id="username"
               name="username"
-              value={formData.username}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
-              placeholder="Enter your name"
+              placeholder="Enter your username"
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="username">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="firstName"
+            >
               First Name
             </label>
             <input
               type="text"
+              id="firstName"
               name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
-              placeholder="Enter your name"
+              placeholder="Enter your first name"
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="lastName">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="lastName"
+            >
               Last Name
             </label>
             <input
               type="text"
+              id="lastName"
               name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
-              placeholder="Enter your name"
+              placeholder="Enter your last name"
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="lastName">
+            <label className="block text-sm font-medium mb-2" htmlFor="email">
               Email
             </label>
             <input
               type="email"
+              id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
-              placeholder="Enter your name"
+              placeholder="Enter your email"
+              onChange={handleChange}
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="lastName">
+          <div className="mb-6">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
               type="password"
+              id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
-              placeholder="Enter your name"
+              placeholder="Enter your password"
+              onChange={handleChange}
+              required
             />
           </div>
           <button
             type="submit"
             className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg"
-            onClick={handleSubmit}
           >
             Sign Up
           </button>
@@ -136,4 +150,3 @@ export default function SignUpPage() {
     </div>
   );
 }
-  

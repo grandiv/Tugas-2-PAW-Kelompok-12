@@ -1,13 +1,13 @@
-const express =  require('express');
+const express = require("express");
 const reviewRouter = express.Router();
-const { authenticateToken } = require ('../middlewares/authMiddleware');
+const { authenticateToken } = require("../middlewares/authMiddleware");
 
 const {
   createReview,
   updateReview,
   getMovieReviews,
-  deleteReview
-} = require('../controllers/reviewControllers');
+  deleteReview,
+} = require("../controllers/reviewControllers");
 
 reviewRouter.post("/create", authenticateToken, createReview);
 reviewRouter.get("/movie/:movieId", getMovieReviews);

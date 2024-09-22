@@ -1,48 +1,49 @@
+// DONE
+
 "use client";
-import axios from "axios";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState} from "react";
-import Cookies from 'js-cookie';
+import { UserLogin, ApiResponse } from "../types/user";
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<UserLogin>({
     username: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!formData.username || !formData.password) {
-      alert('Please fill in all fields');
-      return;
-    }
-
     try {
-      const response = await axios.post('http://localhost:5000/api/user/login', formData);
-
-      alert(response.data.message);
-      setFormData({
-        username: '',
-        password: '',
+      const response = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      Cookies.set('token', response.data.token, {expires: 1/24})
-      alert("Login Succes")
-      router.push('/movies')
+      const data: ApiResponse = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        // Store the token in localStorage or a secure cookie
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
+        router.push("/movies");
+      } else {
+        alert(data.message);
+      }
     } catch (error) {
-      console.error('Error:', error);
-      alert('There was an error login up. Please try again.');
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
@@ -50,46 +51,50 @@ export default function LoginPage() {
     >
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full bg-opacity-80 backdrop-filter backdrop-blur-md">
         <h1 className="text-2xl font-bold mb-6">Login</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="username">
-              username
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="username"
+            >
+              Username
             </label>
             <input
-              type="username"
+              type="text"
               id="username"
               name="username"
-              value={formData.username}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
               placeholder="Enter your username"
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-2" htmlFor="password">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg"
               placeholder="Enter your password"
+              onChange={handleChange}
+              required
             />
           </div>
           <button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg"
-            onClick={handleSubmit}
-            
           >
             Login
           </button>
         </form>
         <p className="mt-4 text-center">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/signup" className="text-blue-500 hover:underline">
             Sign Up
           </a>
@@ -98,4 +103,3 @@ export default function LoginPage() {
     </div>
   );
 }
-  

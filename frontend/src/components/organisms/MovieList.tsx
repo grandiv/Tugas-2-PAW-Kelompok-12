@@ -17,21 +17,24 @@ function MovieCard({ data }: { data: Movie }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/movie/${data._id}`
-      );
+      await axios.delete(`http://localhost:5000/api/movie/${data._id}`);
       alert("Delete movie success");
       router.push("/movies");
     } catch (error) {
-      console.error(
-        "Failed to delete movie:",
-        error.response ? error.response.data : error.message
-      );
-      alert(
-        `Failed to delete movie: ${
-          error.response ? error.response.data.message : error.message
-        }`
-      );
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Failed to delete movie:",
+          error.response ? error.response.data : error.message
+        );
+        alert(
+          `Failed to delete movie: ${
+            error.response ? error.response.data.message : error.message
+          }`
+        );
+      } else {
+        console.error("Failed to delete movie:", error);
+        alert(`Failed to delete movie: ${error}`);
+      }
     }
   };
 
@@ -41,35 +44,37 @@ function MovieCard({ data }: { data: Movie }) {
       desc: data.description,
       release_date: data.release_date ? data.release_date.split("T")[0] : "",
     });
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
     };
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault(); // Prevent page reload
       try {
-        await axios.patch(
-          `http://localhost:5000/api/movie/${data._id}`,
-          {
-            title: formData.title,
-            description: formData.desc,
-            release_date: formData.release_date,
-          }
-        );
+        await axios.patch(`http://localhost:5000/api/movie/${data._id}`, {
+          title: formData.title,
+          description: formData.desc,
+          release_date: formData.release_date,
+        });
         alert("Edit Success");
       } catch (error) {
-        console.error(
-          "Failed to edit movie:",
-          error.response ? error.response.data : error.message
-        );
-        alert(
-          `Failed to edit movie: ${
-            error.response ? error.response.data.message : error.message
-          }`
-        );
+        if (axios.isAxiosError(error)) {
+          console.error(
+            "Failed to delete movie:",
+            error.response ? error.response.data : error.message
+          );
+          alert(
+            `Failed to delete movie: ${
+              error.response ? error.response.data.message : error.message
+            }`
+          );
+        } else {
+          console.error("Failed to delete movie:", error);
+          alert(`Failed to delete movie: ${error}`);
+        }
       }
       setIsModalOpen(false);
       router.push("/movies");
@@ -78,10 +83,14 @@ function MovieCard({ data }: { data: Movie }) {
     return (
       <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative z-10">
-          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Edit Movie</h2>
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+            Edit Movie
+          </h2>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
-              <label className="text-sm font-semibold text-gray-600">Title</label>
+              <label className="text-sm font-semibold text-gray-600">
+                Title
+              </label>
               <input
                 type="text"
                 name="title"
@@ -92,7 +101,9 @@ function MovieCard({ data }: { data: Movie }) {
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-600">Description</label>
+              <label className="text-sm font-semibold text-gray-600">
+                Description
+              </label>
               <input
                 type="text"
                 name="desc"
@@ -103,7 +114,9 @@ function MovieCard({ data }: { data: Movie }) {
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-600">Release Date</label>
+              <label className="text-sm font-semibold text-gray-600">
+                Release Date
+              </label>
               <input
                 type="date"
                 name="release_date"
