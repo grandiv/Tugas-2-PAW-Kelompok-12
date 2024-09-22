@@ -10,17 +10,17 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true); // State untuk loading
+  const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get("token"); // Ambil token di dalam useEffect
+    const token = Cookies.get("token");
     if (!token) {
       router.push("/login");
     } else {
       setIsAuthenticated(true);
     }
-    setLoading(false); // Set loading ke false setelah pemeriksaan selesai
+    setLoading(false);
   }, [router]);
 
   if (loading) {
@@ -28,8 +28,8 @@ export default function AuthLayout({
   }
 
   if (!isAuthenticated) {
-    return null; // Jika tidak terautentikasi, jangan merender anak
+    return null;
   }
 
-  return <>{children}</>; // Merender konten halaman jika terautentikasi
+  return <>{children}</>;
 }
