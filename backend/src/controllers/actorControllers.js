@@ -1,68 +1,215 @@
 const Actor = require("../models/actorModels");
+const Movie = require("../models/movieModels");
 
-const addActor = async (req, res) => {
+exports.createActor = async (req, res) => {
   const { name, desc, birth, images } = req.body;
-
+  const actor = new Actor({
+    name,
+    desc,
+    birth,
+    images,
+  });
   try {
-    const newActor = new Actor({
-      name,
-      desc,
-      birth,
-      images,
+    await actor.save();
+    res.status(201).json("Create Actor Success!");
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
     });
-
-    await newActor.save();
-    res.status(201).json({ message: "Actor added successfully" });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
   }
 };
 
-const getAllActors = async (req, res) => {
+exports.addActorMovies = async (req, res) => {
+  try {
+    const { movieId } = req.body;
+    const actorId = req.params.id;
+
+    const movie = await Movie.findById(movieId);
+    if (!movie)
+      return res.status(404).json({
+        message: "Movie not found",
+      });
+
+    const actor = await Actor.findById(actorId);
+    if (!actor)
+      return res.status(404).json({
+        message: "Actor not found",
+      });
+
+    if (actor.movies.includes(movieId)) {
+      return res.status(400).json({
+        message: "Movie has already been added",
+      });
+    }
+
+    actor.movies.push(movieId);
+    await actor.save();
+    res.status(200).json({
+      message: "Movie succesfully add to actor",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.removeActorMovies = async (req, res) => {
+  try {
+    const { movieId } = req.body;
+    const actorId = req.params.id;
+
+    const movie = await Movie.findById(movieId);
+    if (!movie)
+      return res.status(404).json({
+        message: "Movie not found",
+      });
+
+    const actor = await Actor.findById(actorId);
+    if (!actor)
+      return res.status(404).json({
+        message: "Actor not found",
+      });
+
+    const movieIndex = actor.movies.indexOf(movieId);
+    if (movieIndex === -1) {
+      return res.status(404).json({
+        message: "Movie not found in actor's movies",
+      });
+    }
+
+    actor.movies.splice(movieIndex, 1);
+    await actor.save();
+    res.status(200).json({
+      message: "Movie succesfully add to actor",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.addActorImage = async (req, res) => {
+  try {
+    const { imageUrl } = req.body;
+    const actorId = req.params.id;
+
+    const actor = await Actor.findById(actorId);
+    if (!actor)
+      return res.status(404).json({
+        message: "Actor not found",
+      });
+
+    if (actor.images.includes(imageUrl)) {
+      return res.status(400).json({
+        message: "Image has already been added",
+      });
+    }
+
+    actor.movies.push(imageUrl);
+    await actor.save();
+    res.status(200).json({
+      message: "Image succesfully add to actor",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.removeActorImage = async (req, res) => {
+  try {
+    const { imageUrl } = req.body;
+    const actorId = req.params.id;
+
+    const actor = await Actor.findById(actorId);
+    if (!actor)
+      return res.status(404).json({
+        message: "Actor not found",
+      });
+
+    const imageIndex = actor.movies.indexOf(imageUrl);
+    if (imageIndex === -1) {
+      return res.status(404).json({
+        message: "Image not found in actor's movies",
+      });
+    }
+
+    actor.movies.splice(imageIndex, 1);
+    await actor.save();
+    res.status(200).json({
+      message: "Image succesfully add to actor",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.deleteActor = async (req, res) => {
+  try {
+    const actor = await Actor.findByIdAndDelete(req.params.id);
+    if (!actor)
+      return res.status(404).json({
+        message: "Actor not found",
+      });
+    res.status(200).json({
+      message: "Actor deleted",
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+exports.getActorById = async (req, res) => {
+  try {
+    const actor = await Actor.findById(req.params.id);
+    if (!actor)
+      return res.status(400).json({
+        message: "Actor not found",
+      });
+    res.status(200).json(actor);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+exports.getAllActors = async (req, res) => {
   try {
     const actors = await Actor.find();
-    res.json(actors);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(200).json(actors);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };
 
-const getActor = async (req, res) => {
-  res.json(res.actor);
-};
-
-const updateActor = async (req, res) => {
-  if (req.body.name != null) {
-    res.actor.name = req.body.name;
-  }
-  if (req.body.desc != null) {
-    res.actor.desc = req.body.desc;
-  }
-  if (req.body.birth != null) {
-    res.actor.birth = {
-      date: req.body.birth.date || res.actor.birth.date,
-      country: req.body.birth.country || res.actor.birth.country,
-    };
-  }
-  if (req.body.images != null) {
-    res.actor.images = req.body.images;
-  }
-
+exports.updateActor = async (req, res) => {
   try {
-    const updatedActor = await res.actor.save();
-    res.json(updatedActor);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    const updatedActor = await Actor.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!updatedActor)
+      return res.status(404).json({
+        message: "Actor not found",
+      });
+    res.status(200).json(updatedActor);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
-
-const deleteActor = async (req, res) => {
-  try {
-    await Actor.deleteOne({ _id: res.actor._id });
-    res.json({ message: "Actor deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-module.exports = { addActor, getAllActors, getActor, updateActor, deleteActor };

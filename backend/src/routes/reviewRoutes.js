@@ -1,19 +1,17 @@
-const reviewRouter = require("express").Router();
-const { getOneReview } = require("../middlewares/reviewMiddlewares");
+const express = require("express");
+const reviewRouter = express.Router();
 const { authenticateToken } = require("../middlewares/authMiddleware");
 
 const {
-  getAllReviews,
-  getReview,
+  createReview,
   updateReview,
+  getMovieReviews,
   deleteReview,
-  addMovieReview,
 } = require("../controllers/reviewControllers");
 
-reviewRouter.get("/", getAllReviews);
-reviewRouter.get("/:id", getOneReview, getReview);
-reviewRouter.patch("/:id", getOneReview, updateReview);
-reviewRouter.delete("/:id", getOneReview, deleteReview);
-reviewRouter.post("/", authenticateToken, addMovieReview);
+reviewRouter.post("/create", authenticateToken, createReview);
+reviewRouter.get("/movie/:movieId", getMovieReviews);
+reviewRouter.patch("/:id", authenticateToken, updateReview);
+reviewRouter.delete("/:id", authenticateToken, deleteReview);
 
 module.exports = reviewRouter;

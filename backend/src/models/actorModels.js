@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 
 const actorSchema = new mongoose.Schema({
   name: {
@@ -26,10 +25,10 @@ const actorSchema = new mongoose.Schema({
   ],
   movies: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: "Movies",
     },
   ],
 });
 
-module.exports = mongoose.model("Actors", actorSchema);
+module.exports = mongoose.model("Actor", actorSchema);

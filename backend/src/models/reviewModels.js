@@ -7,14 +7,11 @@ const reviewSchema = new mongoose.Schema({
     ref: "Users",
     required: true,
   },
-  movie: {
-    type: Schema.Types.ObjectId,
-    ref: "Movies",
-    required: true,
-  },
   score: {
-    type: Schema.Types.Decimal128,
+    type: Number,
     required: true,
+    min: 0,
+    max: 10,
   },
   comment: {
     type: String,
