@@ -1,5 +1,5 @@
-import Review from '../models/reviewModels'
-import Movie from '../models/movieModels'
+import Review from '../models/reviewModels';
+import Movie from '../models/movieModels';
 
 export const createReview = async (req, res) => {
     try {
@@ -11,7 +11,7 @@ export const createReview = async (req, res) => {
             return res.status(404).json({ message: "Movie not found" });
         }
 
-        const existingReview = await Review.findOne({ userId, movieId });
+        const existingReview = await Review.findOne({ user: userId, movie: movieId });
         if (existingReview) {
             return res.status(400).json({ message: "You have already reviewed this movie." });
         }
@@ -32,11 +32,11 @@ export const createReview = async (req, res) => {
 
 export const updateReview = async (req, res) => {
     try {
-        const { reviewId } = req.params;
+        const { id } = req.params;
         const { rating, comment } = req.body;
-        const userId = req.user.id; 
+        const userId = req.user.id;
 
-        const review = await Review.findOne({ _id: reviewId, userId });
+        const review = await Review.findOne({ _id: id, user: userId });
         if (!review) {
             return res.status(404).json({ message: "Review not found or you are not authorized to update this review" });
         }
@@ -55,9 +55,9 @@ export const getMovieReviews = async (req, res) => {
     try {
         const { movieId } = req.params;
 
-        const reviews = await Review.find({ movieId })
-            .populate("userId", "username") 
-            .sort({ createdAt: -1 });  
+        const reviews = await Review.find({ movie: movieId })
+            .populate("user", "username")
+            .sort({ createdAt: -1 });
 
         if (!reviews.length) {
             return res.status(404).json({ message: "No reviews found for this movie" });
@@ -71,10 +71,10 @@ export const getMovieReviews = async (req, res) => {
 
 export const deleteReview = async (req, res) => {
     try {
-        const { reviewId } = req.params;
+        const { id } = req.params;
         const userId = req.user.id;
 
-        const review = await Review.findOneAndDelete({ _id: reviewId, userId });
+        const review = await Review.findOneAndDelete({ _id: id, user: userId });
 
         if (!review) {
             return res.status(404).json({ message: "Review not found or not authorized" });

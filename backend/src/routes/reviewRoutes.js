@@ -9,8 +9,8 @@ const {
   deleteReview
 } = require('../controllers/reviewControllers');
 
-reviewRouter.post("/", authenticateToken, createReview);
-reviewRouter.get("/movie/:id", getMovieReviews);
+reviewRouter.post("/create", authenticateToken, createReview);
+reviewRouter.get("/movie/:movieId", getMovieReviews);
 reviewRouter.patch("/:id", authenticateToken, updateReview);
 reviewRouter.delete("/:id", authenticateToken, deleteReview);
 
