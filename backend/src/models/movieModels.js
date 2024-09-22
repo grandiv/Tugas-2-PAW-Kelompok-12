@@ -20,27 +20,37 @@ const movieSchema = new mongoose.Schema({
   },
   actors: [
     {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Actors",
     },
   ],
-  image: {
-    type: String,
-  },
-  rating: [
+  images: [
     {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "Users",
-        required: true,
-      },
-      score: {
-        type: Schema.Types.Decimal128,
-        required: true,
-      },
-      comment: {
+      type: String,
+    },
+  ],
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Reviews",
+    },
+  ],
+  awards: {
+    win: [
+      {
         type: String,
       },
+    ],
+    nomination: [
+      {
+        type: String,
+      },
+    ],
+  },
+  directors: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Directors",
     },
   ],
 });
