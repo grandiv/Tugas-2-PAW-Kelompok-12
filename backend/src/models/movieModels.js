@@ -15,6 +15,10 @@ const movieSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  category: {
+    type: String,
+    required: true,
+  },
   release_date: {
     type: Date,
   },

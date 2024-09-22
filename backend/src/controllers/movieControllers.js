@@ -1,4 +1,6 @@
 const Movie = require("../models/movieModels");
+const Actor = require("../models/actorModels");
+const Director = require("../models/directorModels");
 
 const createMovie = async (req, res) => {
   const {
@@ -27,6 +29,18 @@ const createMovie = async (req, res) => {
 
   try {
     const savedMovie = await newMovie.save();
+
+    await Actor.updateMany(
+      { _id: { $in: actors } }, // Find all actors whose IDs are in the 'actors' array
+      { $push: { movies: savedMovie._id } } // Push the new movie's ID into their movies list
+    );
+
+    // Update each director's movies list with the new movie ID
+    await Director.updateMany(
+      { _id: { $in: directors } }, // Find all directors whose IDs are in the 'directors' array
+      { $push: { movies: savedMovie._id } } // Push the new movie's ID into their movies list
+    );
+
     res.status(201).json(savedMovie);
   } catch (err) {
     res.status(400).json({ message: err.message });

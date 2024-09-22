@@ -25,6 +25,12 @@ const directorSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  movies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Movies",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Directors", directorSchema);

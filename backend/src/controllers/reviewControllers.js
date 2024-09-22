@@ -1,5 +1,6 @@
 const Review = require("../models/reviewModels");
 const Movie = require("../models/movieModels");
+const User = require("../models/userModels");
 
 const getAllReviews = async (req, res) => {
   try {
@@ -58,6 +59,12 @@ const addMovieReview = async (req, res) => {
       { $push: { reviews: savedReview._id } },
       { new: true }
     );
+    await User.findByIdAndUpdate(
+      userId,
+      { $push: { reviews: savedReview._id } },
+      { new: true }
+    );
+
     res.status(201).json({
       message: "Review added successfully",
       review: savedReview,
