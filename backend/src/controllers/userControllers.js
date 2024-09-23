@@ -41,6 +41,13 @@ const loginUser = async (req, res) => {
       expiresIn: "1h",
     });
 
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 3600000,
+    });
+    
     res.status(200).json({ token, message: "Login successful!" });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -94,6 +101,20 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const verifyToken = (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    res.status(200).json({ message: "Token is valid" });
+  });
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -101,4 +122,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  verifyToken,
 };

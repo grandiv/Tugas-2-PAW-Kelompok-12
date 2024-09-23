@@ -14,17 +14,39 @@ export default function AuthLayout({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (!token) {
-      router.push("/login");
-    } else {
-      setIsAuthenticated(true);
-    }
-    setLoading(false);
+    const checkAuth = async () => {
+      const token = Cookies.get("authToken");
+      if (!token) {
+        router.push("/login");
+      } else {
+        try {
+          const response = await fetch("http://localhost:5000/api/user/verify-token", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            setIsAuthenticated(true);
+          } else {
+            Cookies.remove("authToken");
+            router.push("/login");
+          }
+        } catch (error) {
+          console.error("Error during token validation", error);
+          router.push("/login");
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
   }, [router]);
 
   if (loading) {
-    return null; // Menampilkan loading atau tidak merender apapun
+    return null;
   }
 
   if (!isAuthenticated) {
