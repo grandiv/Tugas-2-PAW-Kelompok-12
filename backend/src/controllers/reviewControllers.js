@@ -1,9 +1,9 @@
-import Review from "../models/reviewModels";
-import Movie from "../models/movieModels";
+const Review = require("../models/reviewModels");
+const Movie = require("../models/movieModels");
 
-export const createReview = async (req, res) => {
+const createReview = async (req, res) => {
   try {
-    const { movieId, rating, comment } = req.body;
+    const { movieId, score, comment } = req.body;
     const userId = req.user.id;
 
     const movie = await Movie.findById(movieId);
@@ -24,7 +24,7 @@ export const createReview = async (req, res) => {
     const newReview = new Review({
       user: userId,
       movie: movieId,
-      rating,
+      score,
       comment,
     });
 
@@ -37,10 +37,10 @@ export const createReview = async (req, res) => {
   }
 };
 
-export const updateReview = async (req, res) => {
+const updateReview = async (req, res) => {
   try {
     const { id } = req.params;
-    const { rating, comment } = req.body;
+    const { score, comment } = req.body;
     const userId = req.user.id;
 
     const review = await Review.findOne({ _id: id, user: userId });
@@ -51,7 +51,7 @@ export const updateReview = async (req, res) => {
       });
     }
 
-    review.rating = rating ?? review.rating;
+    review.score = score ?? review.score;
     review.comment = comment ?? review.comment;
 
     await review.save();
@@ -61,13 +61,13 @@ export const updateReview = async (req, res) => {
   }
 };
 
-export const getMovieReviews = async (req, res) => {
+const getMovieReviews = async (req, res) => {
   try {
     const { movieId } = req.params;
 
     const reviews = await Review.find({ movie: movieId })
       .populate("user", "username")
-      .sort({ createdAt: -1 });
+      .sort({ date_posted: -1 });
 
     if (!reviews.length) {
       return res
@@ -81,7 +81,16 @@ export const getMovieReviews = async (req, res) => {
   }
 };
 
-export const deleteReview = async (req, res) => {
+const getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find().populate("user", "username");
+    res.json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteReview = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
@@ -98,4 +107,12 @@ export const deleteReview = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error });
   }
+};
+
+module.exports = {
+  getAllReviews,
+  createReview,
+  updateReview,
+  getMovieReviews,
+  deleteReview,
 };

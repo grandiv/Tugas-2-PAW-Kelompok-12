@@ -20,6 +20,10 @@ const reviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  movie: {
+    type: Schema.Types.ObjectId,
+    ref: "Movies",
+  },
 });
 
 module.exports = mongoose.model("Reviews", reviewSchema);
