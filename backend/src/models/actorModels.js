@@ -31,4 +31,4 @@ const actorSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("Actor", actorSchema);
+module.exports = mongoose.model("Actors", actorSchema);
