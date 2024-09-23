@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { AiOutlineFileAdd, AiOutlineLogout } from "react-icons/ai";
 import axios from "axios";
-import { ActorFormData, ApiResponse } from "@/app/types/actor";
+import { ActorFormData, ApiResponseActor } from "@/app/types/actor";
 
 export default function ActorSideBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,8 +35,8 @@ export default function ActorSideBar() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-        await axios.post<ApiResponse>(
-          "http://localhost:5000/api/actor/create",
+        await axios.post<ApiResponseActor<ActorFormData>>(
+          "http://localhost:5000/api/actor/",
           {
             name: formData.name,
             desc: formData.desc,

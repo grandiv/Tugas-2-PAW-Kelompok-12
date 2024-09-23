@@ -8,7 +8,7 @@ import {
   AiOutlineLeft,
   AiOutlineRight,
 } from "react-icons/ai";
-import { Actor, ActorFormData, ApiResponse } from "@/app/types/actor";
+import { Actor, ActorFormData, ApiResponseActor } from "@/app/types/actor";
 import Image from "next/image";
 
 interface ActorCardProps {
@@ -23,7 +23,7 @@ function ActorCard({ data }: ActorCardProps) {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this actor?")) {
       try {
-        const response = await axios.delete<ApiResponse>(
+        const response = await axios.delete<ApiResponseActor<Actor>>(
           `http://localhost:5000/api/actor/${data._id}`
         );
         alert(response.data.message);
@@ -84,7 +84,7 @@ function ActorCard({ data }: ActorCardProps) {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-        await axios.patch<ApiResponse>(
+        await axios.patch<ApiResponseActor<Actor>>(
           `http://localhost:5000/api/actor/${data._id}`,
           {
             name: formData.name,
@@ -244,7 +244,7 @@ function ActorCard({ data }: ActorCardProps) {
     <>
       <div className="w-full aspect-[3/4] border shadow-md rounded-lg overflow-hidden">
         <div className="flex flex-col w-full h-full p-4 justify-between">
-          <div className="w-full flex justify-end gap-4">
+          <div className="w-full flex justify-end gap-4 mb-4">
             <button onClick={() => setIsModalOpen(true)}>
               <AiOutlineEdit className="text-[24px] text-white" />
             </button>
