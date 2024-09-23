@@ -20,15 +20,15 @@ const actorSchema = new mongoose.Schema({
   },
   images: [
     {
-      type: String
+      type: String,
     },
   ],
-  movies:[
+  movies: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Movies"
-    }
-  ]
+      ref: "Movies",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Actor", actorSchema);

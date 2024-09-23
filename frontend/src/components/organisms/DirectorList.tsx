@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
-// Define the type for a director object
+// Define the type for director data
 interface Director {
   _id: string;
   name: string;
@@ -146,6 +146,16 @@ function DirectorCard({ data }: { data: Director }) {
       </div>
       {isModalOpen && <UpdateDirectorModal />}
     </>
+function DirectorCard({ data }: { data: Director }) {
+  return (
+    <div className="w-full aspect-[3/4] border">
+      <div className="flex flex-col w-full h-full z-10 p-[12px] justify-between">
+        <div>
+          <h1 className="text-[24px] font-medium">{data.name}</h1>
+          <h2>{data.country}</h2>
+        </div>
+      </div>
+    </div>
   );
 }
 
