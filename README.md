@@ -5,7 +5,7 @@
 </p>
 <p align="center">
     <a href="https://github.com/grandiv/Tugas-2-PAW-Kelompok-12/graphs/contributors">
-       <img src="https://img.shields.io/badge/contributors-3-green" alt="contributors"/>
+       <img src="https://img.shields.io/badge/contributors-5-green" alt="contributors"/>
     </a>
 
 <p align="center">
