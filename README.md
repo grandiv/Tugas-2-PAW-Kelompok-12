@@ -63,6 +63,7 @@ Untuk tech stack, cek file seperti `python app.py` (Node.js), `requirements.txt`
 - CRUD Review
 - CRUD User
 - Register dengan hashing
+- Login dengan authentication JWT
 - Penambahan beberapa gambar daring untuk setiap entitas Actor, Director, dan Movie 
 - Penambahan Review untuk sebuah Movie tertentu
 - Pemilihan Actor dan Director tertentu saat menambahkan sebuah Movie
