@@ -35,7 +35,7 @@
 * Dari segi tampilan, aplikasi ini menghadirkan antarmuka Front End yang simpel namun intuitif, memprioritaskan kemudahan penggunaan (usability) sehingga pengguna dapat dengan mudah menavigasi dan mengakses informasi yang dibutuhkan. Selain itu, aplikasi juga mengedepankan fitur-fitur unggulan (utility) seperti pencarian, filter, dan pengelompokan film berdasarkan kategori, yang dirancang untuk memberikan pengalaman terbaik bagi pengguna.
 
 # Tools Backend
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white) 
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 
 # Tools Frontend
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
