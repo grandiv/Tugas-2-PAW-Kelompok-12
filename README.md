@@ -46,7 +46,7 @@ To run a GitHub project locally:
    ```
    git clone https://github.com/grandiv/Tugas-2-PAW-Kelompok-12.git
    ```
-2. avigate into the project directory:
+2. Navigate into the project directory:
    ```
    cd Tugas-2-PAW-Kelompok-12
    ```
