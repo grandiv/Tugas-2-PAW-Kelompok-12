@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineClose,
   AiOutlineEdit,
@@ -13,6 +13,8 @@ import Image from "next/image";
 import Select, { MultiValue, SingleValue } from "react-select";
 import { Actor, ApiResponseActor } from "@/app/types/actor";
 import { Director, ApiResponseDirector } from "@/app/types/director";
+import { Review } from "@/app/types/review";
+import Cookies from "js-cookie";
 
 interface MovieCardProps {
   data: Movie;
@@ -29,6 +31,10 @@ function MovieCard({ data }: MovieCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [actors, setActors] = useState<SelectOption[]>([]);
   const [directors, setDirectors] = useState<SelectOption[]>([]);
+
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
+  const [reviewScore, setReviewScore] = useState<number>(5);
+  const [reviewComment, setReviewComment] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -442,9 +448,62 @@ function MovieCard({ data }: MovieCardProps) {
     );
   }
 
+  const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const authToken = Cookies.get("authToken");
+    if (!authToken) {
+      alert("You must be logged in to submit a review.");
+      router.push("/login");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://localhost:5000/api/review/create",
+        {
+          movieId: data._id,
+          score: reviewScore,
+          comment: reviewComment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      alert("Review submitted successfully!");
+      setIsReviewFormOpen(false);
+      setReviewScore(5);
+      setReviewComment("");
+      const updatedReviews = await axios.get(
+        `http://localhost:5000/api/review/movie/${data._id}`
+      );
+      setReviews(updatedReviews.data);
+    } catch (error) {
+      console.error("Failed to submit review:", error);
+      alert("Failed to submit review. Please try again.");
+    }
+  };
+
+  const [reviews, setReviews] = useState<Review[]>([]);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/review/movie/${data._id}`
+        );
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Failed to fetch reviews:", error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
   return (
     <>
-      <div className="w-full aspect-[3/4] border shadow-md rounded-lg overflow-hidden">
+      <div className="w-full aspect-[3/4] border shadow-md rounded-lg overflow-y-auto">
         <div className="flex flex-col w-full h-full p-4 justify-between">
           <div className="w-full flex justify-end gap-4 mb-4">
             <button
@@ -460,12 +519,14 @@ function MovieCard({ data }: MovieCardProps) {
           <div className="relative w-full h-3/4">
             {data.images.length > 0 ? (
               <>
-                <Image
-                  src={data.images[currentImageIndex]}
-                  alt={data.title}
-                  className="w-full h-full object-cover"
-                  fill
-                />
+                <div className=" aspect-[4/3]">
+                  <Image
+                    src={data.images[currentImageIndex]}
+                    alt={data.title}
+                    className="w-full h-full object-cover"
+                    fill
+                  />
+                </div>
                 {data.images.length > 1 && (
                   <>
                     <button
@@ -494,10 +555,83 @@ function MovieCard({ data }: MovieCardProps) {
               {data.title}
             </h1>
             <h2 className="text-sm text-gray-500">{data.genre.join(", ")}</h2>
+            <button
+              onClick={() => setIsReviewFormOpen(true)}
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Add Review
+            </button>
+            <div className="reviews mt-4">
+              <h3 className="text-xl font-semibold mb-2">Reviews:</h3>
+              {reviews.length > 0 ? (
+                reviews.map((review) => (
+                  <div key={review._id} className="mb-2 p-2 border rounded">
+                    <p>
+                      <strong>{review.user.username}</strong>: {review.score}
+                    </p>
+                    <p>{review.comment}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No reviews available.</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
       {isModalOpen && <UpdateMovieModal />}
+      {isReviewFormOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">
+              Add Review for {data.title}
+            </h2>
+            <form onSubmit={handleReviewSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Score (0-10)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="10"
+                  value={reviewScore}
+                  onChange={(e) => setReviewScore(Number(e.target.value))}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Comment
+                </label>
+                <textarea
+                  value={reviewComment}
+                  onChange={(e) => setReviewComment(e.target.value)}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  rows={4}
+                  required
+                ></textarea>
+              </div>
+              <div className="flex justify-end gap-4">
+                <button
+                  type="button"
+                  onClick={() => setIsReviewFormOpen(false)}
+                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Submit Review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }
