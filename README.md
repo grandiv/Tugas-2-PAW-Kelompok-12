@@ -50,3 +50,18 @@ Dari segi tampilan, aplikasi ini menghadirkan antarmuka Front End yang simpel na
 ## MovieDB - Entity Relationship Diagram untuk MongoDB
 ![MovieDB Entity Relationship Diagram untuk MongoDB](https://github.com/grandiv/Tugas-2-PAW-Kelompok-12/blob/main/ERD.png)
 
+# Milestone 🚀 #
+
+| Nama Kegiatan | Deskripsi Kegiatan | Tanggal|
+|----|----|----|
+| `diagram_schema`| Membuat skema database untuk NOSQL | 12 September 2024|
+| `route`| Membuat route code | 18 September 2024|
+| `controllers`| Membuat controllers code| 22 September 2024|
+| `middlewares`| Membuat middlewares code| 22 September 2024|
+| `frontend`| Membuat tampilan frontend untuk user interface| 23 September 2024|
+| `testing1`| Percobaan apakah sistem berjalan pertama kali| 23 September 2024|
+
+<hr>
+<p align="center">
+Developed with ❤️ in Indonesia (IDN)
+</p>
