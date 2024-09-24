@@ -9,7 +9,7 @@
     </a>
 
 <p align="center">
- <img width="500px" src="documentation/imagesMembers.png" align="center" alt="Members" />
+ <img width="500px" src="documentation/imagesMembersNew.png" align="center" alt="Members" />
  <h2 align="center">This is Our Teams</h2>
  <p align="center">Kami adalah mahasiswa Teknologi Informasi Anggkatan 2022🧙‍♂️💻</p>
 </p>
