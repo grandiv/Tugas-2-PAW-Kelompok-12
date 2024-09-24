@@ -8,7 +8,7 @@
        <img src="https://img.shields.io/badge/contributors-3-green" alt="contributors"/>
     </a>
 
-p align="center">
+<p align="center">
  <img width="500px" src="documentation/imagesMembers.png" align="center" alt="Members" />
  <h2 align="center">This is Our Teams</h2>
  <p align="center">Kami adalah mahasiswa Teknologi Informasi Anggkatan 2022🧙‍♂️💻</p>
