@@ -51,7 +51,7 @@ To run a GitHub project locally:
    cd Tugas-2-PAW-Kelompok-12
    ```
 3. Install dependencies `npm install`.
-4. Run the project: Menggunakan perintah `npm run start`.
+4. Run the project menggunakan perintah `npm run start`.
 
 
 # Use Case API dan Fitur-fitur Front-End
