@@ -62,8 +62,22 @@ Untuk tech stack, cek file seperti `python app.py` (Node.js), `requirements.txt`
 - Penambahan Review untuk sebuah Movie tertentu
 - Pemilihan Actor dan Director tertentu saat menambahkan sebuah Movie
 
-## MovieDB - Entity Relationship Diagram untuk MongoDB
-![MovieDB Entity Relationship Diagram untuk MongoDB](https://github.com/grandiv/Tugas-2-PAW-Kelompok-12/blob/main/ERD.png)
+# MovieDB - Entity Relationship Diagram untuk MongoDB
+<p align="center">
+ <img width="500px" src="documentation/imgaseMonggodb.jpg" align="center" alt="Members" />
+</p>
+
+Dokumentasi ini menjelaskan skema NoSQL untuk basis data film yang diimplementasikan menggunakan MongoDB. Berikut penjelasan lebih lanjut:
+
+## Relasi Antar Koleksi
+1. Actors dan Directors memiliki referensi langsung ke film melalui koleksi Movies.
+2. Reviews memiliki referensi ke Users yang menulis ulasan.
+3. Movies memiliki referensi ke Reviews, Actors, dan Directors.
+
+## Catatan Tambahan
+1. NN: Not Null (Tidak Boleh Kosong).
+2. ObjectId: ID unik yang dihasilkan MongoDB secara otomatis.
+3. Struktur database ini menggunakan referensi antar dokumen untuk menjaga integritas data dan efisiensi pencarian informasi terkait film, aktor, sutradara, dan ulasan.
 
 # Milestone 🚀 #
 
