@@ -103,6 +103,8 @@ Dokumentasi ini menjelaskan skema NoSQL untuk basis data film yang diimplementas
 | `middlewares`| Membuat middlewares code| 22 September 2024|
 | `frontend`| Membuat tampilan frontend untuk user interface| 23 September 2024|
 | `testing1`| Percobaan apakah sistem berjalan pertama kali| 23 September 2024|
+| `demo`| Melakukan video demonstrasi| 24 September 2024|
+| `submitting_assignment`| Mengumpulkan hasil pekerjaan melalui email| 24 September 2024|
 
 <hr>
 <p align="center">
