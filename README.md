@@ -63,10 +63,18 @@ Untuk tech stack, cek file seperti `python app.py` (Node.js), `requirements.txt`
 - CRUD Review
 - CRUD User
 - Register dengan hashing
-- Login dengan authentication JWT
 - Penambahan beberapa gambar daring untuk setiap entitas Actor, Director, dan Movie 
 - Penambahan Review untuk sebuah Movie tertentu
 - Pemilihan Actor dan Director tertentu saat menambahkan sebuah Movie
+
+# Proses Login dan Security
+1. User input email dan password.
+2. User submit login form.
+3. Backend mencocokkan email dan hashed password yang disimpan di database.
+4. Backend menghasilkan authToken (misalnya JWT) dan mengirimkannya ke frontend dalam HttpOnly & Secure cookies yang berlaku selama 1 jam.
+5. Frontend menyimpan authToken di cookies dengan flag HttpOnly dan Secure, mencegah akses oleh JavaScript.
+6. Saat mengakses protected page, frontend mengirimkan cookies ke backend. Backend memvalidasi authToken. Jika valid, halaman bisa diakses. Jika tidak valid (token kadaluarsa atau tidak cocok), user diarahkan ke halaman login.
+(Opsional) Refresh token disimpan untuk memperbarui authToken tanpa login ulang jika sesi habis.
 
 # MovieDB - Entity Relationship Diagram untuk MongoDB
 <p align="center">
