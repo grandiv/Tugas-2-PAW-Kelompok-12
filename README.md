@@ -44,9 +44,9 @@ To run a GitHub project locally:
    ```
    cd Tugas-2-PAW-Kelompok-12
    ```
-3. Install dependencies (depending on the stack, it might use npm for Node.js or pip for Python, etc.).
-
-Run the project: Typically, you use a command like `npm start` , `python app.py`, or similar based on the tech stack.
+3. Install dependencies (Tergantung pada tech stack-nya, gunakan `Node.js` atau `pip` untuk Python, etc.
+4. Run the project: Typically, you use a command like `npm start` , `python app.py`, or similar based on the tech stack.
+For the tech stack, you can check files like `python app.py` (Node.js), `requirements.txt` (Python), or a README file for specific information.
 
 # Use Case API dan Fitur-fitur Front-End
 
