@@ -1,7 +1,7 @@
 <p align="center">
  <img width="100px" src="documentation/imagesLogo.png" align="center" alt="GitHub Readme Stats" />
- <h2 align="center">Kelompok 12</h2>
- <p align="center">Pengembangan Aplikasi Web</p>
+ <h2 align="center">Kelompok 12 Pengembangan Aplikasi Web DTETI</h2>
+ <p align="center">Tugas Membuat API CRUD</p>
 </p>
 <p align="center">
     <a href="https://github.com/grandiv/Tugas-2-PAW-Kelompok-12/graphs/contributors">
