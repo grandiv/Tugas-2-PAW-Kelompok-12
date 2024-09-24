@@ -8,15 +8,19 @@
        <img src="https://img.shields.io/badge/contributors-3-green" alt="contributors"/>
     </a>
 
-## Tugas 2 PAW Kelompok 12
+p align="center">
+ <img width="500px" src="documentation/imagesMembers.png" align="center" alt="Members" />
+ <h2 align="center">This is Our Teams</h2>
+ <p align="center">Kami adalah mahasiswa Teknologi Informasi Anggkatan 2022🧙‍♂️💻</p>
+</p>
 
-| Nama                        | NIM                |
-| --------------------------- | ------------------ |
-| Muhammad Grandiv Lava Putra | 22/493242/TK/54023 |
-| Flavia Hidayriamraata Pualam | 22/494376/TK/54219|
-| Muhammad Farrel Akbar | 22/492806/TK/53947|
-| Muhammad Budi Setiawan | 22/505064/TK/55254|
-| Rani Nirmala Prakoso | 22/493982/TK/54153|
+<p align="center">
+ <p align="center">Flavia Hidayriamraata Pualam - 22/494376/TK/54219 </p>
+ <p align="center">Muhammad Budi Setiawan - 22/505064/TK/55254</p>
+ <p align="center">Muhammad Farrel Akbar - 22/492806/TK/53947</p>
+ <p align="center">Muhammad Grandiv Lava Putra - 22/493242/TK/54023</p>
+ <p align="center">Rani Nirmala Prakoso - 22/493982/TK/54153</p>
+</p>
 
 # MovieDB 
 
