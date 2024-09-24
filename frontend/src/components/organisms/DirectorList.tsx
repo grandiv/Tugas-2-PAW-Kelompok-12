@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineEdit, AiOutlineClose } from "react-icons/ai";
 import DirectorSideBar from "./DirectorSideBar";
+import Image from "next/image";
 
 interface Director {
   _id: string;
@@ -53,8 +54,9 @@ export default function DirectorListWithSidebar() {
   function UpdateDirectorModal() {
     const [formData, setFormData] = useState({
       name: selectedDirector?.name || '',
-      country: selectedDirector?.country || ''
+      country: selectedDirector?.country || '',
     });
+    
     
     useEffect(() => {
       if (selectedDirector) {
@@ -133,9 +135,9 @@ export default function DirectorListWithSidebar() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <DirectorSideBar />
-      <div className="p-8 flex-1">
+      <div className="px-8 flex-1 py-[82px]">
         <h1 className="text-2xl font-bold mb-4">List of Directors</h1>
         {directors.length === 0 ? (
           <p>No directors found</p>
@@ -153,6 +155,7 @@ export default function DirectorListWithSidebar() {
 }
 
 function DirectorCard({ data, onEdit, onDelete }: { data: Director; onEdit: (director: Director) => void; onDelete: (id: string) => void }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   return (
     <div className="w-full aspect-[3/4] border">
       <div className="flex flex-col w-full h-full z-10 p-4 justify-between">
@@ -160,6 +163,38 @@ function DirectorCard({ data, onEdit, onDelete }: { data: Director; onEdit: (dir
           <h1 className="text-lg font-medium">{data.name}</h1>
           <h2>{data.country}</h2>
         </div>
+        <div className="relative w-full h-3/4">
+            {data.images.length > 0 ? (
+              <>
+                <Image
+                  src={data.images[currentImageIndex]}
+                  alt={data.name}
+                  className="w-full h-full object-cover"
+                  fill
+                />
+                {/* {data.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                    >
+                      <AiOutlineLeft />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                    >
+                      <AiOutlineRight />
+                    </button>
+                  </>
+                )} */}
+              </>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                No Image Available
+              </div>
+            )}
+          </div>
         <div className="flex gap-4 mt-4">
           <button onClick={() => onEdit(data)} className="text-white">
             <AiOutlineEdit /> {/* Edit Icon */}
