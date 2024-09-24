@@ -1,4 +1,4 @@
-export interface Actor {
+export interface Director {
   _id: string;
   name: string;
   desc: string;
@@ -10,7 +10,7 @@ export interface Actor {
   movies: string[];
 }
 
-export interface ActorFormData {
+export interface DirectorFormData {
   name: string;
   desc: string;
   birthDate: string;
@@ -18,7 +18,7 @@ export interface ActorFormData {
   images: string[];
 }
 
-export interface ApiResponseActor<T> {
+export interface ApiResponseDirector<T> {
   message: string;
   data: T;
 }
