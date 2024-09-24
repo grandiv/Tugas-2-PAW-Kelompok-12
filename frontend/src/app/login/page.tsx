@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserLogin, ApiResponse } from "../types/user";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState<UserLogin>({
@@ -30,9 +31,12 @@ export default function LoginPage() {
       const data: ApiResponse = await response.json();
       if (response.ok) {
         alert(data.message);
-        // Store the token in localStorage or a secure cookie
         if (data.token) {
-          localStorage.setItem("token", data.token);
+            Cookies.set("authToken", data.token, {
+            expires: 1/24, 
+            sameSite: "Strict", 
+            secure: process.env.NODE_ENV === "production", 
+          });
         }
         router.push("/movies");
       } else {
