@@ -30,9 +30,9 @@ Selain itu, peserta diwajibkan menggunakan panduan resmi tentang git dalam prose
 
 ## Tugas Back End API CRUD Bertema Film
 
-Kelompok 12 memilih untuk mengembangkan sebuah Aplikasi Web bertema film yang berfokus pada penyediaan informasi film secara lengkap dan interaktif. Aplikasi ini mengimplementasikan Back End APIs menggunakan ExpressJS yang terhubung dengan MongoDB sebagai database utama, untuk menyimpan dan mengelola data film secara efisien.
+* Kelompok 12 memilih untuk mengembangkan sebuah Aplikasi Web bertema film yang berfokus pada penyediaan informasi film secara lengkap dan interaktif. Aplikasi ini mengimplementasikan Back End APIs menggunakan ExpressJS yang terhubung dengan MongoDB sebagai database utama, untuk menyimpan dan mengelola data film secara efisien.
 
-Dari segi tampilan, aplikasi ini menghadirkan antarmuka Front End yang simpel namun intuitif, memprioritaskan kemudahan penggunaan (usability) sehingga pengguna dapat dengan mudah menavigasi dan mengakses informasi yang dibutuhkan. Selain itu, aplikasi juga mengedepankan fitur-fitur unggulan (utility) seperti pencarian, filter, dan pengelompokan film berdasarkan kategori, yang dirancang untuk memberikan pengalaman terbaik bagi pengguna.
+* Dari segi tampilan, aplikasi ini menghadirkan antarmuka Front End yang simpel namun intuitif, memprioritaskan kemudahan penggunaan (usability) sehingga pengguna dapat dengan mudah menavigasi dan mengakses informasi yang dibutuhkan. Selain itu, aplikasi juga mengedepankan fitur-fitur unggulan (utility) seperti pencarian, filter, dan pengelompokan film berdasarkan kategori, yang dirancang untuk memberikan pengalaman terbaik bagi pengguna.
 
 ## Use Case API dan Fitur-fitur Front-End
 
