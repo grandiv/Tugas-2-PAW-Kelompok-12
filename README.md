@@ -1,3 +1,12 @@
+<p align="center">
+ <img width="100px" src="documentation/imagesLogo.png" align="center" alt="GitHub Readme Stats" />
+ <h2 align="center">Kelompok 12</h2>
+ <p align="center">Pengembangan Aplikasi Web</p>
+</p>
+<p align="center">
+    <a href="https://github.com/grandiv/Tugas-2-PAW-Kelompok-12/graphs/contributors">
+       <img src="https://img.shields.io/badge/contributors-3-green" alt="contributors"/>
+    </a>
 
 ## Tugas 2 PAW Kelompok 12
 
