@@ -75,7 +75,7 @@ export default function DirectorSideBar() {
     };
 
     return (
-      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+      <div className="fixed min-h-screen min-w-full top-0 left-0 w-fit h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
           <h2 className="text-2xl font-semibold text-blue-600 mb-4">
             Add New Director

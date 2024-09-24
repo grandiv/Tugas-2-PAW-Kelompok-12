@@ -9,6 +9,7 @@ const nextConfig = {
       "graduate.northeastern.edu",
       "img.freepik.com",
       "www.shutterstock.com",
+      "encrypted-tbn1.gstatic.com",
     ],
   },
 };
