@@ -22,11 +22,17 @@
  <p align="center">Rani Nirmala Prakoso - 22/493982/TK/54153</p>
 </p>
 
-# MovieDB 
+# Task Brief
+
+Dalam tugas ini, setiap kelompok yang telah dibagi sebelumnya diminta untuk membuat sebuah API CRUD sederhana dengan tema bebas. Aspek penilaian akan mencakup kebergunaan aplikasi, kerja sama tim (teamwork), repository kode (code repository), dan kinerja API yang dihasilkan.
+
+Selain itu, peserta diwajibkan menggunakan panduan resmi tentang git dalam proses pengerjaan, termasuk cara melakukan commit dan merge dengan baik dan benar. Seluruh proses kerja akan dinilai dari repository GitHub tersebut.
 
 ## Tugas Back End API CRUD Bertema Film
 
-Tugas 2 Pengembangan Aplikasi Web dari Kelompok 12 yang mengambil tema film yang mengimplementasikan Back End APIs menggunakan ExpressJS dan database MongoDB dengan tampilan Front End simpel dan mudah digunakan yang mengutamakan aspek kebergunaan (usability) dan fitur (utility). 
+Kelompok 12 memilih untuk mengembangkan sebuah Aplikasi Web bertema film yang berfokus pada penyediaan informasi film secara lengkap dan interaktif. Aplikasi ini mengimplementasikan Back End APIs menggunakan ExpressJS yang terhubung dengan MongoDB sebagai database utama, untuk menyimpan dan mengelola data film secara efisien.
+
+Dari segi tampilan, aplikasi ini menghadirkan antarmuka Front End yang simpel namun intuitif, memprioritaskan kemudahan penggunaan (usability) sehingga pengguna dapat dengan mudah menavigasi dan mengakses informasi yang dibutuhkan. Selain itu, aplikasi juga mengedepankan fitur-fitur unggulan (utility) seperti pencarian, filter, dan pengelompokan film berdasarkan kategori, yang dirancang untuk memberikan pengalaman terbaik bagi pengguna.
 
 ## Use Case API dan Fitur-fitur Front-End
 
